@@ -9,8 +9,8 @@ author "Breze"
 client_script "client.lua"
 
 files {
-    "ui/build/**/*",
+    "ui/**/*",
 }
 
-ui_page 'ui/build/index.html'
+ui_page 'ui/index.html' -- This is how the structure needs to be, drag the compiled files out of the build folder and place them directly in the UI.
 
