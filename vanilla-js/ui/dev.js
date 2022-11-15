@@ -1,3 +1,5 @@
+// You can ignore this file. All it does is make the UI work on your browser.
+
 window.addEventListener("load", () => {
     if (window.invokeNative) {
         const phoneWrapper = document.getElementById("phone-wrapper");

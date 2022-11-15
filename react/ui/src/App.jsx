@@ -12,10 +12,10 @@ const App = () => {
 
     return (
         <div className="app">
-            {/* <button
+            <button
                 id="button"
                 onClick={() => {
-                    SetPopUp({
+                    window.SetPopUp({
                         title: "Background",
                         description: "Change background color",
                         buttons: [
@@ -42,7 +42,7 @@ const App = () => {
             <button
                 id="context"
                 onClick={() => {
-                    SetContextMenu({
+                    window.SetContextMenu({
                         title: "Context menu",
                         buttons: [
                             {
@@ -68,11 +68,19 @@ const App = () => {
             <button
                 id="gallery"
                 onClick={() => {
-                    SelectGallery({
+                    window.SelectGallery({
                         includeVideos: true,
                         includeImages: true,
                         cb: (data) => {
-                            document.getElementsByClassName("app")[0].style.backgroundImage = `url(${data.src})`;
+                            window.SetPopUp({
+                                title: "Selected media",
+                                attachment: data,
+                                buttons: [
+                                    {
+                                        title: "OK",
+                                    },
+                                ],
+                            });
                         },
                     });
                 }}
@@ -82,11 +90,19 @@ const App = () => {
             <button
                 id="photos"
                 onClick={() => {
-                    SelectGallery({
+                    window.SelectGallery({
                         includeVideos: false,
                         includeImages: true,
                         cb: (data) => {
-                            document.getElementsByClassName("app")[0].style.backgroundImage = `url(${data.src})`;
+                            window.SetPopUp({
+                                title: "Selected photo",
+                                attachment: data,
+                                buttons: [
+                                    {
+                                        title: "OK",
+                                    },
+                                ],
+                            });
                         },
                     });
                 }}
@@ -96,11 +112,19 @@ const App = () => {
             <button
                 id="videos"
                 onClick={() => {
-                    SelectGallery({
+                    window.SelectGallery({
                         includeVideos: true,
                         includeImages: false,
                         cb: (data) => {
-                            document.getElementsByClassName("app")[0].style.backgroundImage = `url(${data.src})`;
+                            window.SetPopUp({
+                                title: "Selected video",
+                                attachment: data,
+                                buttons: [
+                                    {
+                                        title: "OK",
+                                    },
+                                ],
+                            });
                         },
                     });
                 }}
@@ -110,8 +134,16 @@ const App = () => {
             <button
                 id="gif"
                 onClick={() => {
-                    SelectGIF((gif) => {
-                        document.getElementsByClassName("app")[0].style.backgroundImage = `url(${gif})`;
+                    window.SelectGIF((gif) => {
+                        window.SetPopUp({
+                            title: "Selected GIF",
+                            attachment: { src: gif },
+                            buttons: [
+                                {
+                                    title: "OK",
+                                },
+                            ],
+                        });
                     });
                 }}
             >
@@ -120,13 +152,21 @@ const App = () => {
             <button
                 id="emoji"
                 onClick={() => {
-                    SelectEmoji((emoji) => {
-                        console.log(emoji);
+                    window.SelectEmoji((emoji) => {
+                        window.SetPopUp({
+                            title: "Selected emoji",
+                            description: emoji,
+                            buttons: [
+                                {
+                                    title: "OK",
+                                },
+                            ],
+                        });
                     });
                 }}
             >
                 emoji
-            </button> */}
+            </button>
         </div>
     );
 };

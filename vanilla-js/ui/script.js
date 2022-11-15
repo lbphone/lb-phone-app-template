@@ -1,16 +1,16 @@
-document.getElementById("button").onclick = () => {
+document.getElementById("popup").onclick = () => {
     SetPopUp({
         title: "Background",
         description: "Change background color",
         buttons: [
             {
-                title: "Set background to green",
-                color: "green",
+                title: "Blue",
+                color: "blue",
                 cb: () => {
-                    document.getElementsByClassName("app")[0].style.backgroundColor = "green";
+                    document.getElementsByClassName("app")[0].style.backgroundColor = "blue";
                 }
             }, {
-                title: "Set background to red",
+                title: "Red",
                 color: "red",
                 cb: () => {
                     document.getElementsByClassName("app")[0].style.backgroundColor = "red";
@@ -47,7 +47,15 @@ document.getElementById("gallery").onclick = () => {
         includeVideos: true,
         includeImages: true,
         cb: (data => {
-            document.getElementsByClassName("app")[0].style.backgroundImage = `url(${data.src})`;
+            SetPopUp({
+                title: "Selected media",
+                attachment: data,
+                buttons: [
+                    {
+                        title: "OK",
+                    }
+                ]
+            })
         })
     })
 }
@@ -57,7 +65,15 @@ document.getElementById("photos").onclick = () => {
         includeVideos: false,
         includeImages: true,
         cb: (data => {
-            document.getElementsByClassName("app")[0].style.backgroundImage = `url(${data.src})`;
+            SetPopUp({
+                title: "Selected photo",
+                attachment: data,
+                buttons: [
+                    {
+                        title: "OK",
+                    }
+                ]
+            })
         })
     })
 }
@@ -67,20 +83,44 @@ document.getElementById("videos").onclick = () => {
         includeVideos: true,
         includeImages: false,
         cb: (data => {
-            document.getElementsByClassName("app")[0].style.backgroundImage = `url(${data.src})`;
+            SetPopUp({
+                title: "Selected video",
+                attachment: data,
+                buttons: [
+                    {
+                        title: "OK",
+                    }
+                ]
+            })
         })
     })
 }
 
 document.getElementById("gif").onclick = () => {
     SelectGIF((gif) => {
-        document.getElementsByClassName("app")[0].style.backgroundImage = `url(${gif})`;
+        SetPopUp({
+            title: "Selected GIF",
+            attachment: {src: gif},
+            buttons: [
+                {
+                    title: "OK",
+                }
+            ]
+        })
     })
 }
 
 document.getElementById("emoji").onclick = () => {
     SelectEmoji((emoji) => {
-        console.log(emoji);
+        SetPopUp({
+            title: "Selected emoji",
+            description: emoji,
+            buttons: [
+                {
+                    title: "OK",
+                }
+            ]
+        })
     })
 }
 
@@ -96,16 +136,24 @@ const fetchData = (action, data) => {
     };
 
     return new Promise((resolve, reject) => {
-        fetch(`https://${GetParentResourceName()}/${action}`, options)
+        fetch(`https://${resourceName}/${action}`, options)
             .then((response) => response.json())
             .then(resolve)
             .catch(reject);
     });
 };
 
+window.addEventListener("load", () => {
+    OnSettingsChange(settings => {
+        if (settings.display.theme == "dark") {
+            console.log("Dark mode enabled")
+        } else {
+            console.log("Light mode enabled")
+        }
+    })
+});
+
 (async () => {
     console.log(await GetSettings())
     console.log(await GetLocale("APPS.SETTINGS.TITLE"))
-
-    console.log(await fetchData("saveData", { id: 1 }));
 })();

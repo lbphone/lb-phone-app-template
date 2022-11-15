@@ -14,6 +14,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 
     background-color: pink;
 }
@@ -24,4 +25,16 @@ button {
     background-color: green;
 
     cursor: pointer;
+}
+
+/* do not edit, this allows you to view changes easily in your browser */
+#phone-wrapper {
+    display: none;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 29rem;
+    height: 58.5rem;
 }
