@@ -1,10 +1,88 @@
 document.getElementById("button").onclick = () => {
-    fetchData("saveData", { age: 21, name: "John Doe" }).then((res) => {
-        if (!res) return;
-
-        console.log(res);
-    });
+    SetPopUp({
+        title: "Background",
+        description: "Change background color",
+        buttons: [
+            {
+                title: "Set background to green",
+                color: "green",
+                cb: () => {
+                    document.getElementsByClassName("app")[0].style.backgroundColor = "green";
+                }
+            }, {
+                title: "Set background to red",
+                color: "red",
+                cb: () => {
+                    document.getElementsByClassName("app")[0].style.backgroundColor = "red";
+                }
+            }
+        ]
+    })
 };
+
+document.getElementById("context").onclick = () => {
+    SetContextMenu({
+        title: "Context menu",
+        buttons: [
+            {
+                title: "Button 1",
+                color: "green",
+                cb: () => {
+                    console.log("Button 1");
+                }
+            },
+            {
+                title: "Button 2",
+                color: "red",
+                cb: () => {
+                    console.log("Button 2");
+                }
+            }
+        ]
+    })
+}
+
+document.getElementById("gallery").onclick = () => {
+    SelectGallery({
+        includeVideos: true,
+        includeImages: true,
+        cb: (data => {
+            document.getElementsByClassName("app")[0].style.backgroundImage = `url(${data.src})`;
+        })
+    })
+}
+
+document.getElementById("photos").onclick = () => {
+    SelectGallery({
+        includeVideos: false,
+        includeImages: true,
+        cb: (data => {
+            document.getElementsByClassName("app")[0].style.backgroundImage = `url(${data.src})`;
+        })
+    })
+}
+
+document.getElementById("videos").onclick = () => {
+    SelectGallery({
+        includeVideos: true,
+        includeImages: false,
+        cb: (data => {
+            document.getElementsByClassName("app")[0].style.backgroundImage = `url(${data.src})`;
+        })
+    })
+}
+
+document.getElementById("gif").onclick = () => {
+    SelectGIF((gif) => {
+        document.getElementsByClassName("app")[0].style.backgroundImage = `url(${gif})`;
+    })
+}
+
+document.getElementById("emoji").onclick = () => {
+    SelectEmoji((emoji) => {
+        console.log(emoji);
+    })
+}
 
 const fetchData = (action, data) => {
     if (!action || !data) return;
@@ -17,16 +95,17 @@ const fetchData = (action, data) => {
         body: JSON.stringify(data),
     };
 
-    const resourceName = window.GetParentResourceName ? window.GetParentResourceName() : "lb-phone-app-template"; //INSERT YOUR RESOURCE NAME HERE
-
     return new Promise((resolve, reject) => {
-        fetch(`https://${resourceName}/${action}`, options)
+        fetch(`https://${GetParentResourceName()}/${action}`, options)
             .then((response) => response.json())
-            .then((data) => {
-                resolve(data);
-            })
-            .catch((e) => {
-                return reject("Failed to fetch server (IS THE RESOURCE NAME SET CORRECTLY IN 'script.js'?)");
-            });
+            .then(resolve)
+            .catch(reject);
     });
 };
+
+(async () => {
+    console.log(await GetSettings())
+    console.log(await GetLocale("APPS.SETTINGS.TITLE"))
+
+    console.log(await fetchData("saveData", { id: 1 }));
+})();
