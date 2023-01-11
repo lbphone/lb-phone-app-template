@@ -27,13 +27,17 @@ button {
     cursor: pointer;
 }
 
-/* do not edit, this allows you to view changes easily in your browser */
+/* Do not edit, this allows you to view changes easily in your browser */
 #phone-wrapper {
     display: none;
 
     position: absolute;
+    bottom: 0;
     top: 0;
     left: 0;
+    right: 0;
+
+    margin: auto;
 
     width: 29rem;
     height: 58.5rem;
