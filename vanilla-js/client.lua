@@ -1,5 +1,5 @@
 CreateThread(function ()
-    while not GetResourceState("lb-phone") == "started" do
+    while GetResourceState("lb-phone") ~= "started" do
         Wait(0)
     end
 
