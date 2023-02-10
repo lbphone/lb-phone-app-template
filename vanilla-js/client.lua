@@ -1,6 +1,6 @@
 CreateThread(function ()
     while GetResourceState("lb-phone") ~= "started" do
-        Wait(0)
+        Wait(500)
     end
 
     local added, errorMessage = exports["lb-phone"]:AddCustomApp({
