@@ -4,28 +4,48 @@
         <meta charset="utf-8" />
         <title>Custom App Template</title>
         <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="colors.css" />
 
-        <script>
-            const resourceName = "lb-phone-app-template";
-        </script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
     </head>
     <body>
         <div id="phone-wrapper">
-            <div class="app">
-                <button id="popup">popup</button>
-                <button id="context">context menu</button>
-
-                <button id="gallery">gallery</button>
-                <button id="photos">photos</button>
-                <button id="videos">videos</button>
-
-                <button id="gif">gif</button>
-                <button id="emoji">emoji</button>
+            <div class="app" id="content">
+                <div class="app-wrapper">
+                    <div class="header">
+                        <div class="title">Custom App Template</div>
+                        <div class="subtitle">Vanilla JS</div>
+                        <a class="subtitle" id="direction">N</a>
+                    </div>
+                    <div class="button-wrapper">
+                        <button id="popup">Popup Menu</button>
+                        <button id="context">Context Menu</button>
+                        <button id="gif">Gif Selector</button>
+                        <button id="gallery">Gallery Selector</button>
+                        <button id="emoji">Emoji Selector</button>
+                        <input id="notificationText" type="text" placeholder="Notification text" />
+                    </div>
+                </div>
             </div>
         </div>
 
-        <script src="https://cfx-nui-lb-phone/ui/components.js"></script>
         <script src="dev.js"></script>
-        <script src="script.js"></script>
+        <script>
+            window.addEventListener('message', (e) => {
+                if (e.data === 'componentsLoaded') {
+                    const script = document.createElement('script');
+                    script.src = 'script.js';
+                    document.body.appendChild(script);
+                    
+                    fetchNui("getDirection").then((direction) => {
+                        document.getElementById('direction').innerText = direction;
+                    });
+                } else if (e.data?.type === "updateDirection") {
+                    document.getElementById('direction').innerText = e.data.direction;
+                }
+            });
+        </script>
     </body>
 </html>

@@ -1,3 +1,11 @@
-1. Set your resource name in row **9** in the `index.html` file
-2. For production, remove the `dev.js` import from the `index.html` file.
-3. Configure the app at the top of the `client.lua` code.
+# LB Phone - Vanilla JS Template
+You can open the index.html file in your browser while editing the UI. Ensuring the script will add the app to your phone.
+
+You need to wait for the components to load before you can use them. You can listen for the `componentsLoaded` message to know when the components are ready.
+
+```js
+window.addEventListener("message", (e) => {
+    if (e.data !== "componentsLoaded") return;
+    // Here you can access the components
+});
+```

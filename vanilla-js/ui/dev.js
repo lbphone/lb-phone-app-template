@@ -13,10 +13,7 @@ window.addEventListener("load", () => {
     document.getElementById("phone-wrapper").style.display = "block";
     document.body.style.visibility = "visible";
 
-    function center() {
-        document.getElementById("phone-wrapper").style.scale = window.innerWidth / 1920;
-    }
-
+    const center = () => document.getElementById("phone-wrapper").style.scale = window.innerWidth / 1920;
     center();
     window.addEventListener("resize", center);
 });

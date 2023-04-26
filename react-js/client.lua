@@ -1,4 +1,4 @@
-local identifier = "vanilla-js-template"
+local identifier = "react-js-template"
 
 CreateThread(function ()
     while GetResourceState("lb-phone") ~= "started" do
@@ -8,14 +8,17 @@ CreateThread(function ()
     local function AddApp()
         local added, errorMessage = exports["lb-phone"]:AddCustomApp({
             identifier = identifier,
-            name = "Vanilla JS",
-            description = "Template app using vanilla JS",
+            name = "React JS",
+            description = "Template app using react",
             developer = "Breze",
             defaultApp = true, -- OPTIONAL if set to true, app should be added without having to download it,
             size = 59812, -- OPTIONAL in kb
             images = {"https://example.com/photo.jpg"}, -- OPTIONAL array of images for the app on the app store
-            ui = GetCurrentResourceName() .. "/ui/index.html", -- this is the path to the HTML file, can also be a URL
-            icon = "https://cfx-nui-" .. GetCurrentResourceName() .. "/ui/assets/icon.png"
+
+            ui = GetCurrentResourceName() .. "/ui/dist/index.html", -- built version
+            -- ui = "http://localhost:3000", -- dev version
+
+            icon = "https://cfx-nui-" .. GetCurrentResourceName() .. "/ui/icon.png"
         })
 
         if not added then
