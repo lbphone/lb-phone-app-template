@@ -15,6 +15,7 @@ const App = () => {
         if (devMode) {
             document.getElementsByTagName('html')[0].style.visibility = 'visible';
             document.getElementsByTagName('body')[0].style.visibility = 'visible';
+            return;
         } else {
             getSettings().then((settings: any) => setTheme(settings.display.theme));
             onSettingsChange((settings: any) => setTheme(settings.display.theme));
