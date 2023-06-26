@@ -8,8 +8,8 @@ const App = () => {
     const [direction, setDirection] = useState('N');
     const [notificationText, setNotificationText] = useState('Notification text');
     const appDiv = useRef(null);
-    
-    const { setPopUp, setContextMenu, selectGIF, selectGallery, selectEmoji, fetchNui, sendNotification, getSettings, onSettingsChange } = window as any;
+
+    const { setPopUp, setContextMenu, selectGIF, selectGallery, selectEmoji, fetchNui, sendNotification, getSettings, onSettingsChange, colorPicker, useCamera } = window as any;
 
     useEffect(() => {
         if (devMode) {
@@ -86,7 +86,7 @@ const App = () => {
                                             title: 'GTA Notification',
                                             color: 'red',
                                             cb: () => {
-                                                fetchNui('drawNotification', {message: notificationText });
+                                                fetchNui('drawNotification', { message: notificationText });
                                             }
                                         }
                                     ]
@@ -153,10 +153,59 @@ const App = () => {
                         >
                             Emoji Selector
                         </button>
-                        <input 
-                            placeholder='Notification text'
-                            onChange={(e: any) => setNotificationText(e.target.value)}
-                        ></input>
+                        <button
+                            id='colorpicker'
+                            onClick={() => {
+                                colorPicker((color: string) => {
+                                    setPopUp({
+                                        title: 'Selected color',
+                                        description: color,
+                                        buttons: [
+                                            {
+                                                title: 'OK'
+                                            }
+                                        ]
+                                    });
+                                });
+                            }}
+                        >
+                            Color Picker
+                        </button>
+                        <button
+                            id='camreacomponent'
+                            onClick={() => {
+                                useCamera(
+                                    (url) => {
+                                        setPopUp({
+                                            title: 'Media taken',
+                                            attachment: { src: url },
+                                            buttons: [
+                                                {
+                                                    title: 'OK'
+                                                }
+                                            ]
+                                        });
+                                    },
+                                    {
+                                        default: {
+                                            type: 'Photo', // 'Photo' | 'Video' | 'Landscape'
+                                            flash: false,
+                                            camera: 'rear' // 'rear' | 'front'
+                                        },
+                                        permissions: {
+                                            toggleFlash: true,
+                                            flipCamera: true,
+                                            takePhoto: true,
+                                            takeVideo: true,
+                                            takeLandscapePhoto: true
+                                        }
+                                    }
+                                );
+                            }}
+                        >
+                            Camera Component
+                        </button>
+                        <input placeholder='Notification text' onChange={(e: any) => setNotificationText(e.target.value)}></input>
                     </div>
                 </div>
             </div>

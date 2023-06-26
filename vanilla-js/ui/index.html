@@ -25,6 +25,8 @@
                         <button id="gif">Gif Selector</button>
                         <button id="gallery">Gallery Selector</button>
                         <button id="emoji">Emoji Selector</button>
+                        <button id="colorpicker">Color Picker</button>
+                        <button id="cameracomponent">Camera Component</button>
                         <input id="notificationText" type="text" placeholder="Notification text" />
                     </div>
                 </div>
@@ -38,11 +40,11 @@
                     const script = document.createElement('script');
                     script.src = 'script.js';
                     document.body.appendChild(script);
-                    
-                    fetchNui("getDirection").then((direction) => {
+
+                    fetchNui('getDirection').then((direction) => {
                         document.getElementById('direction').innerText = direction;
                     });
-                } else if (e.data?.type === "updateDirection") {
+                } else if (e.data?.type === 'updateDirection') {
                     document.getElementById('direction').innerText = e.data.direction;
                 }
             });

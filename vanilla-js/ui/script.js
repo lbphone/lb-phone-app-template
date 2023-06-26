@@ -16,7 +16,7 @@ document.getElementById('context').onclick = () => {
                 title: 'GTA Notification',
                 color: 'red',
                 cb: () => {
-                    fetchNui('drawNotification', {message: notificationText });
+                    fetchNui('drawNotification', { message: notificationText });
                 }
             }
         ]
@@ -90,6 +90,50 @@ document.getElementById('emoji').onclick = () => {
             ]
         });
     });
+};
+
+document.getElementById('colorpicker').onclick = () => {
+    colorPicker((color) => {
+        setPopUp({
+            title: 'Selected color',
+            description: color,
+            buttons: [
+                {
+                    title: 'OK'
+                }
+            ]
+        });
+    });
+};
+
+document.getElementById('cameracomponent').onclick = () => {
+    useCamera(
+        (url) => {
+            setPopUp({
+                title: 'Media taken',
+                attachment: { src: url },
+                buttons: [
+                    {
+                        title: 'OK'
+                    }
+                ]
+            });
+        },
+        {
+            default: {
+                type: 'Photo', // 'Photo' | 'Video' | 'Landscape'
+                flash: false,
+                camera: 'rear' // 'rear' | 'front'
+            },
+            permissions: {
+                toggleFlash: true,
+                flipCamera: true,
+                takePhoto: true,
+                takeVideo: true,
+                takeLandscapePhoto: true
+            }
+        }
+    );
 };
 
 onSettingsChange((settings) => {
