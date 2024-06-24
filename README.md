@@ -7,6 +7,7 @@ This repository contains templates for [LB Phone](https://store.lbphone.com/) ap
 -   [react js](./lb-reactjs) - React app template
 -   [react typescript](./lb-reactts) - React app template with TypeScript
 -   [vanilla js](./lb-vanillajs) - Vanilla JavaScript app template
+-   [vue js](./lb-vuejs) - Vue JS app template (Thanks to @RedrumRP)
 
 ## Documentation
 
