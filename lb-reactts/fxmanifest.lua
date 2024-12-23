@@ -12,5 +12,7 @@ files {
     "ui/icon.png"
 }
 
+dependency "lb-phone"
+
 ui_page "ui/dist/index.html"
 -- ui_page "http://localhost:3000"

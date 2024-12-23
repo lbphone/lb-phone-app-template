@@ -11,4 +11,6 @@ files {
     "ui/**/*"
 }
 
+dependency "lb-phone"
+
 ui_page "ui/index.html"
