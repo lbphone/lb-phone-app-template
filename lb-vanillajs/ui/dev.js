@@ -20,6 +20,22 @@ window.addEventListener('load', () => {
         const notch = document.createElement('div');
         notch.classList.add('phone-notch');
 
+        // Create the phone indicator
+        const indicator = document.createElement('div');
+        indicator.classList.add('phone-indicator');
+
+        // Create the time
+        const time = document.createElement('div');
+        time.classList.add('phone-time');
+
+        const date = new Date();
+        time.innerText = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0');
+
+        setInterval(() => {
+            const date = new Date();
+            time.innerText = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0');
+        }, 1000);
+
         // Create the phone content container and append children to it
         const phoneContent = document.createElement('div');
         phoneContent.classList.add('phone-content');
@@ -28,6 +44,8 @@ window.addEventListener('load', () => {
         // Append the notch and content to the frame
         frame.appendChild(notch);
         frame.appendChild(phoneContent);
+        frame.appendChild(indicator);
+        frame.appendChild(time);
 
         return frame;
     };

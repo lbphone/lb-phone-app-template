@@ -1,6 +1,6 @@
 # LB Phone - App Templates
 
-This repository contains templates for [LB Phone](https://store.lbphone.com/) apps, showcasing most functions provided by LB Phone.
+This repository contains templates for [LB Phone](https://store.lbscripts.com/) apps, showcasing most functions provided by LB Phone.
 
 ## Templates
 
@@ -18,4 +18,4 @@ The variables are:
 -   `resourceName` - The name of the custom app resource, use this when fetching data.
 -   `appName` - The app identifier, useful for notifications.
 
-For a full list, see [LB Phone documentation](https://docs.lbphone.com/phone/custom-apps/).
+For a full list, see [LB Phone documentation](https://docs.lbscripts.com/phone/custom-apps/).

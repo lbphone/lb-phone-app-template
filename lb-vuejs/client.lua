@@ -21,11 +21,10 @@ local function addApp()
             "https://cfx-nui-" .. GetCurrentResourceName() .. "/ui/dist/screenshot-dark.png"
         },
 
-        -- ui = "http://localhost:3000",
-        ui = GetCurrentResourceName() .. "/ui/dist/index.html",
+        ui = "http://localhost:3000",
+        -- ui = GetCurrentResourceName() .. "/ui/dist/index.html",
 
         icon = "https://cfx-nui-" .. GetCurrentResourceName() .. "/ui/dist/icon.png",
-
         fixBlur = true -- set to true if you use em, rem etc instead of px in your css
     })
 
