@@ -7,8 +7,6 @@ author "Breze & Loaf"
 
 client_script "client.lua"
 
-files {
-    "ui/**/*"
-}
+file "ui/**/*"
 
 ui_page "ui/index.html"
