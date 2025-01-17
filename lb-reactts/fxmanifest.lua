@@ -1,6 +1,5 @@
 fx_version "cerulean"
 game "gta5"
-nui_callback_strict_mode "true"
 
 title "LB Phone - App Template | React TS"
 description "A template for creating apps for the LB Phone."
