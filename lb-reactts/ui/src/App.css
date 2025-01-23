@@ -99,17 +99,34 @@ input {
     outline: none;
 }
 
-/* Do not edit, this allows you to view changes easily in your browser */
-.dev-wrapper {
+.gamerender-blur {
     position: absolute;
-
-    bottom: 0;
     top: 0;
     left: 0;
-    right: 0;
 
-    margin: auto;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(0.2rem);
 
-    width: 29rem;
-    height: 58.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gamerender-container {
+    width: 80%;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+/* Do not edit, this allows you to view changes easily in your browser */
+.dev-wrapper {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100vw;
+    height: 100vh;
 }
