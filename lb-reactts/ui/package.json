@@ -23,5 +23,8 @@
             "react-app",
             "react-app/jest"
         ]
+    },
+    "devDependencies": {
+        "@types/react": "^19.0.8"
     }
 }
