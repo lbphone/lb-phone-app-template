@@ -5,7 +5,7 @@ import Frame from './components/Frame'
 const devMode = !window?.['invokeNative']
 
 const App = () => {
-    const [gameRender, setGameRender] = useState(true)
+    const [gameRender, setGameRender] = useState(false)
     const [notificationText, setNotificationText] = useState('Notification text')
 
     const appDiv = useRef(null)
