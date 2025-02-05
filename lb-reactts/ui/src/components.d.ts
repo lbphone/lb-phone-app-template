@@ -284,7 +284,7 @@ declare global {
         setShareComponent: (data: ShareComponentData) => void
         setGifPickerVisible: (data: GifSelectorData) => void
         setGallery: (data: GalleryData) => void
-        setFullscreenImage: (data: FullscreenImagedata) => void
+        setFullscreenImage: (data: string) => void
         setHomeIndicatorVisible: (visible: boolean) => void
     }
     var fetchNui: <T>(eventName: string, data?: unknown, mockData?: T) => Promise<T>
