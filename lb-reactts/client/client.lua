@@ -5,6 +5,28 @@ end
 Wait(1000) -- wait for the AddCustomApp export to exist
 
 local url = GetResourceMetadata(GetCurrentResourceName(), "ui_page", 0)
+local appOpen = false
+local directions = { "N", "NE", "E", "SE", "S", "SW", "W", "NW" }
+local oldYaw, currentDirection
+
+local function SendDirection()
+    while appOpen do
+        Wait(25)
+
+        local yaw = math.floor(360.0 - ((GetFinalRenderedCamRot(0).z + 360.0) % 360.0) + 0.5)
+
+        if yaw == 360 then
+            yaw = 0
+        end
+
+        if oldYaw ~= yaw then
+            oldYaw = yaw
+            currentDirection = yaw .. "° " .. directions[math.floor((yaw + 22.5) / 45.0) % 8 + 1]
+
+            SendAppMessage("updateDirection", currentDirection)
+        end
+    end
+end
 
 local function AddApp()
     local added, errorMessage = exports["lb-phone"]:AddCustomApp({
@@ -28,7 +50,15 @@ local function AddApp()
 
         fixBlur = true,
 
+        onOpen = function()
+            appOpen = true
+
+            Citizen.CreateThreadNow(SendDirection)
+        end,
+
         onClose = function()
+            appOpen = false
+
             exports["lb-phone"]:DisableWalkableCam()
         end
     })
@@ -45,9 +75,6 @@ AddEventHandler("onResourceStart", function(resource)
         AddApp()
     end
 end)
-
-local directions = { "N", "NE", "E", "SE", "S", "SW", "W", "NW" }
-local oldYaw, currentDirection
 
 RegisterNUICallback("getDirection", function(data, cb)
     cb(currentDirection)
@@ -70,20 +97,3 @@ RegisterNUICallback("drawNotification", function(data, cb)
 
     cb("ok")
 end)
-
-while true do
-    Wait(25)
-
-    local yaw = math.floor(360.0 - ((GetFinalRenderedCamRot(0).z + 360.0) % 360.0) + 0.5)
-
-    if yaw == 360 then
-        yaw = 0
-    end
-
-    if oldYaw ~= yaw then
-        oldYaw = yaw
-        currentDirection = yaw .. "° " .. directions[math.floor((yaw + 22.5) / 45.0) % 8 + 1]
-
-        SendAppMessage("updateDirection", currentDirection)
-    end
-end

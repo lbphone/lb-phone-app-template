@@ -4,18 +4,25 @@
     box-sizing: border-box;
 }
 
+*:focus, *:active {
+    outline: none;
+}
+
 .app {
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
 
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+
     display: flex;
-    align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 3rem;
 
     background-color: var(--background-primary);
 
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 .app-wrapper {

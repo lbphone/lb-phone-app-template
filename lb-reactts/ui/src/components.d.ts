@@ -38,6 +38,51 @@ interface GameRender {
     render(): void
 }
 
+declare class GameMap {
+    constructor(
+        canvas: HTMLElement,
+        options?: {
+            allowMoving?: boolean
+            center?: [number, number] | { x: number; y: number } | null | undefined
+            minZoom?: number
+            maxZoom?: number
+            defaultZoom?: number
+        }
+    )
+
+    ready: Promise<void>
+    currentCoords?: { x: number; y: number }
+
+    setZoom(zoomLevel: number): boolean
+    getZoom(): number | null
+    setPosition(position: [number, number] | { x: number; y: number } | null | undefined, zoomLevel?: number): boolean
+    getMaps(): string[]
+    setMap(map: string | { id?: string }): boolean
+    cycleMap(): string | null
+    getStyles(): string[]
+    setStyle(style: string | null): boolean
+    cycleStyle(): string | null
+    setShowSelf(show: boolean): Promise<void>
+    addLocation(location: {
+        title?: string
+        image?: string
+        coords?: {
+            x?: number
+            y?: number
+        }
+    }): {
+        id: number
+        title?: string
+        image?: string
+        coords: {
+            x: number
+            y: number
+        }
+    } | null
+    removeLocation(location: number | { id?: number }): boolean
+    destroy(): void
+}
+
 type ContactsData = {
     number: string
     name?: string
@@ -178,7 +223,7 @@ type ShareComponentData = {
 
         //location
         name?: string
-        location?: unknown
+        location?: [number, number] // [y, x]
 
         //note
         title?: string
@@ -267,7 +312,12 @@ declare global {
     var components: {
         createGameRender: (canvas: HTMLCanvasElement) => GameRender
         uploadMedia: (uploadType: 'Video' | 'Image' | 'Audio', blob: Blob) => Promise<string>
-        saveToGallery: (url: string, size?: number, type?: 'screenshot' | 'selfie' | 'import', shouldLog?: boolean) => Promise<unknown>
+        saveToGallery: (
+            url: string,
+            size?: number,
+            type?: 'screenshot' | 'selfie' | 'import',
+            shouldLog?: boolean
+        ) => Promise<unknown>
         fetchPhone: (eventName: string, data?: unknown, mockData?: unknown) => Promise<unknown>
         setColorPicker: (data: ColorPickerData) => void
         setPopUp: (data: PopUp) => void
@@ -286,6 +336,7 @@ declare global {
         setGallery: (data: GalleryData) => void
         setFullscreenImage: (data: string) => void
         setHomeIndicatorVisible: (visible: boolean) => void
+        GameMap: typeof GameMap
     }
     var fetchNui: <T>(eventName: string, data?: unknown, mockData?: T) => Promise<T>
     var useNuiEvent: <T>(eventName: string, cb: (data: T) => void) => void
