@@ -305,6 +305,7 @@ declare global {
     var useCamera: (cb: (url: string) => void, options: CameraComponentData) => void
     var settings: Settings
     var appName: string
+    var appIdentifier: string
     var resourceName: string
 }
 

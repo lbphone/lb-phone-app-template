@@ -1,147 +1,92 @@
-document.getElementById('context').onclick = () => {
-    let notificationText = document.getElementById('notificationText').value;
-    if (notificationText === '') notificationText = 'Notification text';
+const notificationText = () => document.getElementById('notification-text').value || 'Hello!';
 
-    setContextMenu({
-        title: 'Context menu',
-        buttons: [
-            {
-                title: 'Phone Notification',
-                color: 'blue',
-                cb: () => {
-                    sendNotification({ title: notificationText });
-                }
-            },
-            {
-                title: 'GTA Notification',
-                color: 'red',
-                cb: () => {
-                    fetchNui('drawNotification', { message: notificationText });
-                }
-            }
-        ]
-    });
-};
-
-document.getElementById('gallery').onclick = () => {
-    selectGallery({
-        includeVideos: true,
-        includeImages: true,
-        cb: (data) => {
-            setPopUp({
-                title: 'Selected media',
-                attachment: data,
-                buttons: [
-                    {
-                        title: 'OK'
-                    }
-                ]
-            });
-        }
-    });
-};
-
-document.getElementById('popup').onclick = () => {
-    setPopUp({
-        title: 'Popup Menu',
+const showPopUp = () =>
+    components.setPopUp({
+        title: 'Pop-up',
         description: 'Confirm your choice',
         buttons: [
-            {
-                title: 'Cancel',
-                color: 'red',
-                cb: () => {
-                    console.log('Cancel');
-                }
-            },
-            {
-                title: 'Confirm',
-                color: 'blue',
-                cb: () => {
-                    console.log('Confirm');
-                }
-            }
+            { title: 'Cancel', color: 'red' },
+            { title: 'Confirm', color: 'blue', cb: () => console.log('Confirmed') }
         ]
     });
-};
 
-document.getElementById('gif').onclick = () => {
-    selectGIF((gif) => {
-        setPopUp({
-            title: 'Selected GIF',
-            attachment: { src: gif },
-            buttons: [
-                {
-                    title: 'OK'
-                }
-            ]
-        });
+const showContextMenu = () =>
+    components.setContextMenu({
+        title: 'Context menu',
+        buttons: [
+            { title: 'First option', color: 'blue', cb: () => console.log('First') },
+            { title: 'Second option', cb: () => console.log('Second') }
+        ]
     });
-};
 
-document.getElementById('emoji').onclick = () => {
-    selectEmoji((emoji) => {
-        setPopUp({
-            title: 'Selected emoji',
-            description: emoji,
-            buttons: [
-                {
-                    title: 'OK'
-                }
-            ]
-        });
-    });
-};
-
-document.getElementById('colorpicker').onclick = () => {
-    colorPicker((color) => {
-        setPopUp({
-            title: 'Selected color',
-            description: color,
-            buttons: [
-                {
-                    title: 'OK'
-                }
-            ]
-        });
-    });
-};
-
-document.getElementById('cameracomponent').onclick = () => {
-    useCamera(
-        (url) => {
-            setPopUp({
-                title: 'Media taken',
-                attachment: { src: url },
-                buttons: [
-                    {
-                        title: 'OK'
-                    }
-                ]
-            });
-        },
-        {
-            default: {
-                type: 'Photo', // 'Photo' | 'Video' | 'Landscape'
-                flash: false,
-                camera: 'rear' // 'rear' | 'front'
-            },
-            permissions: {
-                toggleFlash: true,
-                flipCamera: true,
-                takePhoto: true,
-                takeVideo: true,
-                takeLandscapePhoto: true
-            }
+const pickFromGallery = () =>
+    components.setGallery({
+        includeImages: true,
+        includeVideos: true,
+        onSelect: (data) => {
+            const photo = Array.isArray(data) ? data[0] : data;
+            components.setPopUp({ title: 'Selected media', attachment: { src: photo.src }, buttons: [{ title: 'OK' }] });
         }
-    );
-};
+    });
 
-onSettingsChange((settings) => {
-    let theme = settings.display.theme;
-    document.getElementsByClassName('app')[0].dataset.theme = theme;
+const pickGif = () =>
+    components.setGifPickerVisible({
+        onSelect: (gif) => components.setPopUp({ title: 'Selected GIF', attachment: { src: gif }, buttons: [{ title: 'OK' }] })
+    });
+
+const pickEmoji = () =>
+    components.setEmojiPickerVisible({
+        onSelect: (emoji) => components.setPopUp({ title: 'Selected emoji', description: emoji?.emoji, buttons: [{ title: 'OK' }] })
+    });
+
+const pickColor = () =>
+    components.setColorPicker({
+        onSelect: () => {},
+        onClose: (color) => components.setPopUp({ title: 'Selected color', description: color, buttons: [{ title: 'OK' }] })
+    });
+
+const pickContact = () =>
+    components.setContactSelector({
+        onSelect: (contact) => components.setPopUp({ title: contact.name ?? 'Contact', description: contact.number, buttons: [{ title: 'OK' }] })
+    });
+
+const openCamera = () =>
+    components
+        .fetchPhone('ShowComponent', { component: 'camera', default: { type: 'Photo', camera: 'rear' }, permissions: { takePhoto: true, flipCamera: true, toggleFlash: true } })
+        .then((url) => {
+            if (typeof url === 'string') components.setPopUp({ title: 'Photo taken', attachment: { src: url }, buttons: [{ title: 'OK' }] });
+        });
+
+const sendPhoneNotification = () => components.fetchPhone('SendNotification', { app: appIdentifier, title: 'Custom App Template', content: notificationText() });
+
+const chevronRow = (title, onClick) => ({
+    component: 'Row',
+    props: { onClick },
+    children: [
+        { component: 'Row.Content', children: [{ component: 'Row.Title', children: title }] },
+        { component: 'Row.Trailing', children: [{ component: 'Row.Chevron' }] }
+    ]
 });
 
-getSettings().then((settings) => {
-    let theme = settings.display.theme;
-    document.getElementsByClassName('app')[0].dataset.theme = theme;
+LBKit.mount(document.getElementById('components-list'), {
+    component: 'InsetGroup',
+    children: [
+        chevronRow('Pop-up', showPopUp),
+        chevronRow('Context menu', showContextMenu),
+        chevronRow('Gallery', pickFromGallery),
+        chevronRow('GIF picker', pickGif),
+        chevronRow('Emoji picker', pickEmoji),
+        chevronRow('Color picker', pickColor),
+        chevronRow('Contact selector', pickContact),
+        chevronRow('Camera', openCamera)
+    ]
+});
+
+LBKit.mount(document.getElementById('notification-actions'), {
+    component: 'InsetGroup',
+    children: [chevronRow('Send phone notification', sendPhoneNotification), chevronRow('Draw GTA notification', () => fetchNui('drawNotification', { message: notificationText() }))]
+});
+
+document.getElementById('controls').addEventListener('change', (event) => {
+    if (event.target?.type === 'checkbox') console.log('airplane on?', event.target.checked);
 });

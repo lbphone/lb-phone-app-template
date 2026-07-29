@@ -13,31 +13,51 @@
     </head>
     <body>
         <div id="phone-wrapper">
-            <div class="app" id="content">
-                <div class="app-wrapper">
-                    <div class="header">
-                        <div class="title">Custom App Template</div>
-                        <div class="subtitle">Vanilla JS</div>
-                        <a class="subtitle" id="direction">N</a>
+            <div class="app" id="app">
+                <div class="demo">
+                    <div class="demo-header">
+                        <div class="demo-title">Custom App Template</div>
+                        <div class="demo-subtitle">Vanilla JS · facing <span id="direction">N</span></div>
                     </div>
-                    <div class="button-wrapper">
-                        <button id="popup">Popup Menu</button>
-                        <button id="context">Context Menu</button>
-                        <button id="gif">Gif Selector</button>
-                        <button id="gallery">Gallery Selector</button>
-                        <button id="emoji">Emoji Selector</button>
-                        <button id="colorpicker">Color Picker</button>
-                        <button id="cameracomponent">Camera Component</button>
-                        <input id="notificationText" type="text" placeholder="Notification text" />
+
+                    <lb-group-header>Rows &amp; controls</lb-group-header>
+                    <lb-inset-group id="controls">
+                        <lb-row>
+                            <lb-row-content>
+                                <lb-row-title>Wi-Fi</lb-row-title>
+                                <lb-row-subtitle>Static lb-* tags</lb-row-subtitle>
+                            </lb-row-content>
+                            <lb-row-trailing>
+                                <lb-row-value>Home-5G</lb-row-value>
+                                <lb-row-chevron></lb-row-chevron>
+                            </lb-row-trailing>
+                        </lb-row>
+                        <lb-row>
+                            <lb-row-content>
+                                <lb-row-title>Airplane Mode</lb-row-title>
+                            </lb-row-content>
+                            <lb-row-trailing>
+                                <lb-toggle></lb-toggle>
+                            </lb-row-trailing>
+                        </lb-row>
+                    </lb-inset-group>
+
+                    <lb-group-header>Phone components</lb-group-header>
+                    <div id="components-list"></div>
+
+                    <lb-group-header>Notifications</lb-group-header>
+                    <div class="demo-field-row">
+                        <input id="notification-text" placeholder="Notification text" value="Hello from my app!" />
                     </div>
+                    <div id="notification-actions"></div>
                 </div>
             </div>
         </div>
 
         <script src="dev.js"></script>
         <script>
-            window.addEventListener('message', (e) => {
-                if (e.data === 'componentsLoaded') {
+            window.addEventListener('message', (event) => {
+                if (event.data === 'componentsLoaded') {
                     const script = document.createElement('script');
                     script.src = 'script.js';
                     document.body.appendChild(script);
@@ -45,8 +65,8 @@
                     fetchNui('getDirection').then((direction) => {
                         document.getElementById('direction').innerText = direction;
                     });
-                } else if (e.data?.type === 'updateDirection') {
-                    document.getElementById('direction').innerText = e.data.direction;
+                } else if (event.data?.type === 'updateDirection') {
+                    document.getElementById('direction').innerText = event.data.direction;
                 }
             });
         </script>

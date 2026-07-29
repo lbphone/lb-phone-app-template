@@ -1,8 +1,8 @@
-import vue from '@vitejs/plugin-vue'
+import vue from '@vitejs/plugin-vue';
 import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
-export default defineConfig(( {command} ) => ({
+export default defineConfig(({ command }) => ({
     base: command === 'build' ? '/ui/dist' : undefined,
     define: {
         global: 'window'
@@ -10,15 +10,17 @@ export default defineConfig(( {command} ) => ({
     build: {
         sourcemap: false
     },
-    optimizeDeps: {
-        esbuildOptions: {
-            mainFields: ['module', 'main'],
-            resolveExtensions: ['.js', '.jsx']
-        }
-    },
     server: {
         port: 3000,
         open: true
     },
-    plugins: [vue()],
+    plugins: [
+        vue({
+            template: {
+                compilerOptions: {
+                    isCustomElement: (tag) => tag.startsWith('lb-')
+                }
+            }
+        })
+    ]
 }));

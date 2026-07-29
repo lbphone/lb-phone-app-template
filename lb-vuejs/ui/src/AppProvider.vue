@@ -1,11 +1,11 @@
 <template id="app-provider-template">
-    <div>
+    <div class="app-root">
         <div v-if="devMode" class="dev-wrapper">
             <Frame>
                 <slot />
             </Frame>
         </div>
-        <div v-else>
+        <div v-else class="app-root">
             <slot />
         </div>
     </div>
@@ -24,3 +24,10 @@ export default {
     }
 };
 </script>
+
+<style>
+.app-root {
+    height: 100%;
+    width: 100%;
+}
+</style>

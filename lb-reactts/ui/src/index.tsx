@@ -1,23 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
+const devMode = !(window as unknown as { invokeNative?: unknown }).invokeNative;
 
-import './colors.css'
-import './index.css'
-
-const devMode = !window?.['invokeNative']
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const boot = () => import('./boot');
 
 if (window.name === '' || devMode) {
-    const renderApp = () => {
-        root.render(<App />)
-    }
-
     if (devMode) {
-        renderApp()
+        boot();
     } else {
         window.addEventListener('message', (event) => {
-            if (event.data === 'componentsLoaded') renderApp()
-        })
+            if (event.data === 'componentsLoaded') boot();
+        });
     }
 }

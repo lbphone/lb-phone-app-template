@@ -21,3 +21,36 @@ To use, follow these steps:
 2. Right click on the ui/index.html file, and click "Open with Live Server"
 3. Uncomment line 21 in client.lua
 4. Comment out line 22 in client.lua
+
+## UI Kit
+
+The phone registers its components as `lb-*` custom elements, so you can use them directly in `index.html`:
+
+```html
+<lb-inset-group>
+    <lb-row>
+        <lb-row-content><lb-row-title>Wi-Fi</lb-row-title></lb-row-content>
+        <lb-row-trailing>
+            <lb-row-value>Home-5G</lb-row-value>
+            <lb-row-chevron></lb-row-chevron>
+        </lb-row-trailing>
+    </lb-row>
+</lb-inset-group>
+```
+
+For interactive lists (rows with click handlers) build them with `LBKit.mount`, as in `script.js`:
+
+```js
+LBKit.mount(document.getElementById('list'), {
+    component: 'InsetGroup',
+    children: [
+        {
+            component: 'Row',
+            props: { onClick: openThing },
+            children: [{ component: 'Row.Content', children: [{ component: 'Row.Title', children: 'Open' }] }]
+        }
+    ]
+});
+```
+
+Only the outermost `lb-*` element stays in the DOM — nested tags are compiled into it — so listen for `click`/`change` on the top-level element. Kit components only render **inside LB Phone**.

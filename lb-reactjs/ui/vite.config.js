@@ -1,8 +1,7 @@
-import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
-export default defineConfig(( {command} ) => ({
+export default defineConfig(({ command }) => ({
     base: command === 'build' ? '/ui/dist' : undefined,
     define: {
         global: 'window'
@@ -10,15 +9,13 @@ export default defineConfig(( {command} ) => ({
     build: {
         sourcemap: false
     },
-    optimizeDeps: {
-        esbuildOptions: {
-            mainFields: ['module', 'main'],
-            resolveExtensions: ['.js', '.jsx']
-        }
+    esbuild: {
+        jsx: 'transform',
+        jsxFactory: 'React.createElement',
+        jsxFragment: 'React.Fragment'
     },
     server: {
         port: 3000,
         open: true
-    },
-    plugins: [react()],
+    }
 }));

@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-
+import React, { useEffect, useState } from '../lb/react';
 import './Frame.css';
 
 export default function Frame({ children }) {
@@ -15,11 +14,11 @@ export default function Frame({ children }) {
     }, []);
 
     return (
-        <div className='phone-frame'>
-            <div className='phone-notch'></div>
-            <div className='phone-time'>{time}</div>
-            <div className='phone-indicator'></div>
-            <div className='phone-content'>{children}</div>
+        <div className="phone-frame">
+            <div className="phone-notch"></div>
+            <div className="phone-time">{time}</div>
+            <div className="phone-indicator"></div>
+            <div className="phone-content">{children}</div>
         </div>
     );
 }

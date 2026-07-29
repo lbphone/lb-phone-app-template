@@ -4,102 +4,69 @@
     box-sizing: border-box;
 }
 
+html,
 body {
-    visibility: hidden;
+    height: 100%;
+    width: 100%;
 }
 
-.app {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    background-color: var(--background-primary);
-
+body {
+    visibility: hidden;
     font-family: 'Poppins', sans-serif;
 }
 
-.app-wrapper {
-    width: 100%;
+.app {
     height: 100%;
+    width: 100%;
+    background-color: var(--background-primary);
+    color: var(--text-primary);
+}
 
+.demo {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 3rem;
-}
-
-.header,
-.button-wrapper {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    gap: 0.2rem;
-}
-
-.button-wrapper {
     gap: 1rem;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
 }
 
-.title {
-    font-size: 1.4rem;
-    font-weight: 700;
+.demo::-webkit-scrollbar {
+    display: none;
+}
 
+.demo-header {
+    text-align: center;
+}
+
+.demo-title {
+    font-size: 1.35rem;
+    font-weight: 700;
     color: var(--text-primary);
 }
 
-.subtitle {
-    font-size: 1rem;
-    font-weight: 400;
-
+.demo-subtitle {
+    font-size: 0.9rem;
     color: var(--text-secondary);
 }
 
-button {
-    width: 14rem;
-    height: 3.25rem;
-
-    background-color: var(--background-highlight);
-    color: var(--text-primary);
-
-    border: none;
-    border-radius: 0.3rem;
-
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-
-    cursor: pointer;
-    transition: all 0.25s ease-in-out;
-
-    user-select: none;
+.demo-field-row {
+    width: 90%;
 }
 
-button:hover {
-    filter: brightness(0.8);
-}
-
-input {
-    width: 14rem;
-    height: 3.25rem;
-
+#notification-text {
+    width: 100%;
+    height: 3rem;
     background-color: var(--background-highlight);
     color: var(--text-primary);
-
     border: none;
-    border-radius: 0.3rem;
-
+    border-radius: 0.6rem;
     padding: 0 1rem;
-
-    font-size: 0.8rem;
-    font-weight: 600;
-
-    transition: all 0.25s ease-in-out;
-
+    font-family: inherit;
+    font-size: 0.9rem;
     outline: none;
 }
 
